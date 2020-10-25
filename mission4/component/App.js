@@ -23,7 +23,6 @@ export default function App(){
     todos: [],
     users: [],
     selectedUser: '',
-    selectedIdx: '',
 
     $target: document.querySelector('#todo-list'),
     $userTarget: document.querySelector('#user-list'),
@@ -77,10 +76,10 @@ export default function App(){
   }
 
   this.countTodo = () => {
-    const completeTodo = this.state.todos.filter((item)=>item.isCompleted);
+    const completeTodos = this.state.todos.filter((item)=>item.isCompleted);
     const countTodoObj = {
-      completeTodo: completeTodo.length,
-      incompleteTodo : this.state.todos.length - completeTodo.length
+      completeTodo: completeTodos.length,
+      incompleteTodo : this.state.todos.length - completeTodos.length
     }
     return countTodoObj;
   }

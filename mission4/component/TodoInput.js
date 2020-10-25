@@ -25,10 +25,8 @@ export default function TodoInput($target, addTodo, deleteAllTodo){
     this.todoInputAddEventListener = () => {
         this.$inputBtn.addEventListener('click', this.addTodo); 
         
-        const removeAllTodo = new CustomEvent('removeAll');
-        this.$deleteBtn.addEventListener('removeAll', this.deleteAllTodo);
         this.$deleteBtn.addEventListener('click', (e) => {
-            e.target.dispatchEvent(removeAllTodo);
+            this.deleteAllTodo();
         })
     }
 
