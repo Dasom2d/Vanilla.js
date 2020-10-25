@@ -2,7 +2,9 @@ export default function UserList(user, $target, $btn, settingTodos) {
     this.$target = $target;
     this.$btn = $btn;
     this.user = user;
-
+    this.$userTarget = document.querySelector('#user-list');
+    this.$userName = document.querySelector('#user-name');
+    
     this.$ul = document.createElement('ul');
 
 
@@ -12,9 +14,9 @@ export default function UserList(user, $target, $btn, settingTodos) {
         })
 
         this.$btn.addEventListener('click', (e)=>{
-            document.getElementById('user-list').style.display = 'block';
-            document.getElementById('todo-list').style.display = 'none';
-            document.getElementById('user-name').style.display = 'none';
+            this.$userTarget.style.display = 'block';
+            this.$target.style.display = 'none';
+            dhis.$userName.style.display = 'none';
         })
 
     }
