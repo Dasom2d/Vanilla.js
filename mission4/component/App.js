@@ -23,18 +23,24 @@ export default function App(){
     todos: [],
     users: [],
     selectedUser: '',
-    selectedIdx: ''
+    selectedIdx: '',
+
+    $target: document.querySelector('#todo-list'),
+    $userTarget: document.querySelector('#user-list'),
+    $btn: document.querySelector('#show-btn'),
+    $userName: document.querySelector('#user-name'),
+    $showBtn: document.querySelector('#show-btn')
   };
 
   this.settingTodos = (userIdx) => {
     this.state.selectedUser = this.state.users[userIdx];
     this.fetchTodos();
 
-    $userName.style.display = 'block';
-    $userName.innerHTML = this.state.selectedUser + '의 Todo List';
-    $showBtn.style.display = 'block';
-    $userTarget.style.display = 'none';
-    $target.style.display = 'block';
+    this.state.$userName.style.display = 'block';
+    this.state.$userName.innerHTML = this.state.selectedUser + '의 Todo List';
+    this.state.$showBtn.style.display = 'block';
+    this.state.$userTarget.style.display = 'none';
+    this.state.$target.style.display = 'block';
   }
 
   this.fetchTodos = async () => {
@@ -45,7 +51,7 @@ export default function App(){
   this.fetchUsers = async () => {
     const users = await api.getUser();
     this.state.users = users;
-    this.userList = new UserList(this.state.users, $userTarget, $btn, this.settingTodos);
+    this.userList = new UserList(this.state.users, this.state.$userTarget, this.state.$btn, this.settingTodos);
   }
 
   this.toggleTodo = async (idx) => {
@@ -92,18 +98,13 @@ export default function App(){
 
   // this.fetchTodos();
   this.fetchUsers();
-  const $target = document.querySelector('#todo-list');
-  const $userTarget = document.querySelector('#user-list');
-  const $btn = document.querySelector('#show-btn');
-  const $userName = document.querySelector('#user-name');
-  const $showBtn = document.querySelector('#show-btn');
 
 
   //this.localStorage = new LocalStorage();
   //this.data = this.localStorage.getData();
-  this.todoList = new TodoList(this.state.todos, $target, this.isValid, this.toggleTodo, this.deleteTodo);
-  this.todoInput = new TodoInput($target, this.addTodo, this.deleteAllTodo);
-  this.todoCount = new TodoCount($target, this.countTodo);
+  this.todoList = new TodoList(this.state.todos, this.state.$target, this.isValid, this.toggleTodo, this.deleteTodo);
+  this.todoInput = new TodoInput(this.state.$target, this.addTodo, this.deleteAllTodo);
+  this.todoCount = new TodoCount(this.state.$target, this.countTodo);
 
   
 }
