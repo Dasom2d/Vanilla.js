@@ -13,10 +13,14 @@ const request = async (fetchUrl, options) => {
         if(res.ok){
             return await res.json();
         } else {
-            throw new Error('조회 중 에러가 발생하였습니다.');
+        new Promise((resolve, reject) => {
+            throw new Error(`조회 중 에러가 발생하였습니다.`);
+          }).catch(alert);  
         }
     } catch(e) {
-        throw new Error(`서버 통신 중 에러가 발생하였습니다. ; ${e.message}`);
+        new Promise((resolve, reject) => {
+            throw new Error(`서버 통신 중 에러가 발생하였습니다. ; ${e.message}`);
+          }).catch(alert);        
     }
 }
 

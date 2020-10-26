@@ -25,20 +25,21 @@ export default function App(){
     selectedUser: '',
 
     $target: document.querySelector('#todo-list'),
-    $userTarget: document.querySelector('#user-list'),
+    $userList: document.querySelector('#user-list'),
     $btn: document.querySelector('#show-btn'),
-    $userName: document.querySelector('#user-name'),
-    $showBtn: document.querySelector('#show-btn')
+    $userTodo: document.querySelector('#user-todo'),
+    $showBtn: document.querySelector('#show-btn'),
+    $loaing: document.querySelector('#loading')
   };
 
   this.settingTodos = (userIdx) => {
     this.state.selectedUser = this.state.users[userIdx];
     this.fetchTodos();
 
-    this.state.$userName.style.display = 'block';
-    this.state.$userName.innerHTML = this.state.selectedUser + '의 Todo List';
+    this.state.$userTodo.style.display = 'block';
+    this.state.$userTodo.innerHTML = this.state.selectedUser + '의 Todo List';
     this.state.$showBtn.style.display = 'block';
-    this.state.$userTarget.style.display = 'none';
+    this.state.$userList.style.display = 'none';
     this.state.$target.style.display = 'block';
   }
 
@@ -50,7 +51,16 @@ export default function App(){
   this.fetchUsers = async () => {
     const users = await api.getUser();
     this.state.users = users;
-    this.userList = new UserList(this.state.users, this.state.$userTarget, this.state.$btn, this.settingTodos);
+
+    const getUserList_param = {
+      userList: this.state.users,
+      $userList: this.state.$userList,
+      $btn: this.state.$btn,
+      $userTodo: this.state.$userTodo,
+      $target: this.state.$target,
+      fn_settingTodo: this.settingTodos
+    }
+    this.userList = new UserList(getUserList_param);
   }
 
   this.toggleTodo = async (idx) => {
