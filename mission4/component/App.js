@@ -19,6 +19,7 @@ export default function App(){
     }
   }
 
+
   this.state = {
     todos: [],
     users: [],
@@ -49,8 +50,13 @@ export default function App(){
     this.userList.setState(this.state.users);
   }
 
-  this.toggleTodo = async (idx) => {
-    const todoId = this.state.todos[idx]._id;
+  // this.toggleTodo = async (idx) => {
+  //   const todoId = this.state.todos[idx]._id;
+  //   await api.toggleTodo(todoId, this.state.selectedUser);
+  //   this.fetchTodos();
+  // }
+  this.toggleTodo = async (id) => {
+    const todoId = id;
     await api.toggleTodo(todoId, this.state.selectedUser);
     this.fetchTodos();
   }
@@ -81,7 +87,8 @@ export default function App(){
   }
 
   this.render = () => {
-    this.todoList.setState(this.state.todos, this.state.selectedUser);
+  //  this.todoList.setState(this.state.todos, this.state.selectedUser);
+    this.todo.setState(this.state.todos, this.state.selectedUser);
     this.todoCount.render();
   }
 
@@ -103,7 +110,17 @@ export default function App(){
     fn_fetchUsers: this.fetchUsers
   });
 
-  this.todoList = new TodoList({
+  // this.todoList = new TodoList({
+  //   $usersArea: this.state.$usersArea,
+  //   $todoArea: this.state.$todoArea, 
+  //   $backBtn: this.state.$backBtn,
+  //   $inputArea: this.state.$inputArea,
+  //   fn_isValid: this.isValid, 
+  //   fn_toggleTodo: this.toggleTodo, 
+  //   fn_deleteTodo: this.deleteTodo
+  // });
+
+  this.todo = new Todo({
     $usersArea: this.state.$usersArea,
     $todoArea: this.state.$todoArea, 
     $backBtn: this.state.$backBtn,
@@ -112,7 +129,6 @@ export default function App(){
     fn_toggleTodo: this.toggleTodo, 
     fn_deleteTodo: this.deleteTodo
   });
-
 
   this.todoInput = new TodoInput({
     $inputArea: this.state.$inputArea, 

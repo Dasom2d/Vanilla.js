@@ -19,12 +19,12 @@ export default function TodoList(todoObj){
     }
     this.render = () => {
         this.$usersArea.style.display = 'none';
+        this.$backBtn.style.display = 'block';
         let $prevUl = this.$usersArea.querySelector('ul');
         while ($prevUl != null && $prevUl.hasChildNodes()) {
             $prevUl.removeChild($prevUl.firstChild);
         }
 
-        this.$backBtn.style.display = 'block';
         this.$todoArea.innerHTML = this.userName + '의 Todo List';
         this.$ul.innerHTML = this.todos.map((todo, index) => {
             return todo.isCompleted ? `
