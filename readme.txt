@@ -66,3 +66,7 @@ https://todo-api.roto.codes/users 를 fetch 해오면 username 목록을 얻을 
 -> 실무에 적용해보려했으나 역시 익스플로러에서 적용이 안돼 아쉬웠음
 - 조회해온 데이터를 html에 바인딩 후 데이터를 가져옴-> 좀 불편했음
 - vue가 이런 식으로 구현되었구나(render)를 알게되어서 재밌었음
+- param의 갯수가 많을 때는 obj형태로 넘기는 것이 효율적임
+
+[실행 방법]
+- terminal을 이용해 실행하려는 소스로 이동 후 npx http-server -c -1
