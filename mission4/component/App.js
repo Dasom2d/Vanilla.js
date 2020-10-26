@@ -81,7 +81,8 @@ export default function App(){
   }
 
   this.render = () => {
-    this.todoList.setState(this.state.todos, this.state.selectedUser);
+  //  this.todoList.setState(this.state.todos, this.state.selectedUser);
+    this.todo.setState(this.state.todos, this.state.selectedUser);
     this.todoCount.render();
   }
 
@@ -103,7 +104,17 @@ export default function App(){
     fn_fetchUsers: this.fetchUsers
   });
 
-  this.todoList = new TodoList({
+  // this.todoList = new TodoList({
+  //   $usersArea: this.state.$usersArea,
+  //   $todoArea: this.state.$todoArea, 
+  //   $backBtn: this.state.$backBtn,
+  //   $inputArea: this.state.$inputArea,
+  //   fn_isValid: this.isValid, 
+  //   fn_toggleTodo: this.toggleTodo, 
+  //   fn_deleteTodo: this.deleteTodo
+  // });
+
+  this.todo = new Todo({
     $usersArea: this.state.$usersArea,
     $todoArea: this.state.$todoArea, 
     $backBtn: this.state.$backBtn,
@@ -112,7 +123,6 @@ export default function App(){
     fn_toggleTodo: this.toggleTodo, 
     fn_deleteTodo: this.deleteTodo
   });
-
 
   this.todoInput = new TodoInput({
     $inputArea: this.state.$inputArea, 
