@@ -1,15 +1,15 @@
-export default function TodoCount($target, countTodo){
-    this.$target = $target;
+export default function TodoCount(countObj){
+    this.$countArea = countObj.$countArea;
+    this.countTodo = countObj.fn_countTodo;
+
     this.$div = document.createElement('div');
 
     this.render = () => {
-        const todoCount = countTodo();
+        this.$countArea.style.display = 'block';
+        const todoCount = this.countTodo();
         this.$div.innerText = `완료된 일 ; ${todoCount.completeTodo}
                                 미완료된 일 ; ${todoCount.incompleteTodo}`;
-        this.$target.firstElementChild.after(this.$div);
+        this.$countArea.append(this.$div);
 
     }
-
-
-    this.render();
 }

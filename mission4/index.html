@@ -9,15 +9,20 @@
 <body>
     <div id="app">
         <div>사용자 리스트 
-            <button id="show-btn" style="display: none;">보이기</button>
+            <button id="back-btn" style="display: none;">◀ 돌아가기</button>
         </div> 
-        <div id="user-list"></div>
+        <div id="users-area" style="display: none;"></div>
         <br>
-        <div id="user-todo" style="display: none;"></div>
         <img src="css/loading.gif" id="loading" style="display: none;">
-        <div id="todo-list" style="display: none;"></div>
-        <div id="todo-complete-list" style="display: none;"></div>
-        <div id="todo-incomplete-list" style="display: none;"></div>
+        <div id="todo-area" style="display: none;">
+          <div id="user-todo"></div>
+          <div id="todo-list"></div>
+          <div id="todo-complete-list"></div>
+          <div id="todo-incomplete-list"></div>
+        </div>
+        <br>
+        <div id=count-area style="display: none;"></div>
+        <div id=input-area style="display: none;"></div>
     </div>
   <script src="./component/index.js" type="module"></script>
 </body>

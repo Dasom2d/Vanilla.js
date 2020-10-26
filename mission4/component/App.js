@@ -25,39 +25,18 @@ export default function App(){
     users: [],
     selectedUser: '',
 
-    $target: document.querySelector('#todo-list'),
-    $userList: document.querySelector('#user-list'),
-    $btn: document.querySelector('#show-btn'),
-    $userTodo: document.querySelector('#user-todo'),
-    $showBtn: document.querySelector('#show-btn'),
-    $loaing: document.querySelector('#loading'),
-    $completeTodoList: document.querySelector('#todo-complete-list'),
-    $inCompleteTodoList: document.querySelector('#todo-incomplete-list'),
+    $usersArea: document.querySelector('#users-area'),
+    $backBtn: document.querySelector('#back-btn'),
+    $todoArea: document.querySelector('#todo-area'),
+    $countArea: document.querySelector('#count-area'),
+    $inputArea: document.querySelector('#input-area')
   };
 
-  this.settingTodos = (userIdx) => {
+  this.settingTodo = (userIdx) => {
     this.state.selectedUser = this.state.users[userIdx];
     this.state.todos = [];
     this.render();
-
     this.fetchTodos();
-    this.state.$userTodo.style.display = 'block';
-    this.state.$userTodo.innerHTML = this.state.selectedUser + '의 Todo List';
-    this.state.$showBtn.style.display = 'block';
-    
-   
-    let $ul = this.state.$target.querySelector('ul');
-    while ($ul != null && $ul.hasChildNodes()) {
-      $ul.removeChild($ul.firstChild);
-   }
-    let $competeUl = this.state.$completeTodoList.querySelector('ul');
-    while ($competeUl.hasChildNodes()) {
-      $ul.removeChild($competeUl.firstChild);
-   }
-
-    this.state.$userList.style.display = 'none';
-    //this.state.$target.style.display = 'block';
-    this.state.$completeTodoList.style.display = 'block';
   }
 
   this.fetchTodos = async () => {
@@ -68,16 +47,7 @@ export default function App(){
   this.fetchUsers = async () => {
     const users = await api.getUser();
     this.state.users = users;
-
-    const getUserList_param = {
-      userList: this.state.users,
-      $userList: this.state.$userList,
-      $btn: this.state.$btn,
-      $userTodo: this.state.$userTodo,
-      $target: this.state.$target,
-      fn_settingTodo: this.settingTodos
-    }
-    this.userList = new UserList(getUserList_param);
+    this.userList.setState(this.state.users);
   }
 
   this.toggleTodo = async (idx) => {
@@ -112,8 +82,8 @@ export default function App(){
   }
 
   this.render = () => {
- //   this.todoList.setState(this.state.todos);
-    this.todoCompleteList.setState(this.state.todos);
+    this.todoList.setState(this.state.todos, this.state.selectedUser);
+   // this.todoCompleteList.setState(this.state.todos);
     this.todoCount.render();
   }
 
@@ -124,17 +94,46 @@ export default function App(){
 
   this.fetchUsers();
 
+  this.userList = new UserList({
+    userList: this.state.users,
+    $usersArea: this.state.$usersArea,
+    $todoArea: this.state.$todoArea,
+    $backBtn: this.state.$backBtn,
+    $countArea: this.state.$countArea,
+    $inputArea: this.state.$inputArea,
+    fn_settingTodo: this.settingTodo,
+    fn_fetchUsers: this.fetchUsers
+  });
 
-  //this.todoList = new TodoList(this.state.todos, this.state.$target, this.isValid, this.toggleTodo, this.deleteTodo);
-  this.todoCompleteList = new TodoCompleteList({
-    competeTodos: this.state.todos, 
-    $completeTodoList: this.state.$completeTodoList, 
+  this.todoList = new TodoList({
+    $usersArea: this.state.$usersArea,
+    $todoArea: this.state.$todoArea, 
+    $backBtn: this.state.$backBtn,
+    $inputArea: this.state.$inputArea,
     fn_isValid: this.isValid, 
-    fn_toggldTodo: this.toggleTodo, 
+    fn_toggleTodo: this.toggleTodo, 
     fn_deleteTodo: this.deleteTodo
   });
-  this.todoInput = new TodoInput(this.state.$target, this.addTodo, this.deleteAllTodo);
-  this.todoCount = new TodoCount(this.state.$target, this.countTodo);
+
+  // this.todoCompleteList = new TodoCompleteList({
+  //   competeTodos: this.state.todos, 
+  //   $completeTodoList: this.state.$completeTodoList, 
+  //   fn_isValid: this.isValid, 
+  //   fn_toggldTodo: this.toggleTodo, 
+  //   fn_deleteTodo: this.deleteTodo
+  // });
+
+  this.todoInput = new TodoInput({
+    $inputArea: this.state.$inputArea, 
+    fn_addTodo: this.addTodo, 
+    fn_deleteTodo: this.deleteTodo,
+    fn_deleteAllTodo: this.deleteAllTodo
+  });
+  
+  this.todoCount = new TodoCount({
+    $countArea:this.state.$countArea, 
+    fn_countTodo: this.countTodo
+  });
 
   
 }

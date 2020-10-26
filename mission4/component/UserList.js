@@ -1,33 +1,49 @@
 export default function UserList(userObj) { 
 
-    this.userList = userObj.userList;
-    this.$userList = userObj.$userList;
-    this.$btn = userObj.$btn;
-    this.$userTodo = userObj.$userTodo;
-    this.$target = userObj.$target;
+    this.userList = [];
+    this.$usersArea = userObj.$usersArea;
+    this.$todoArea = userObj.$todoArea;
+    this.$backBtn = userObj.$backBtn;
+    this.$countArea = userObj.$countArea;
+    this.$inputArea = userObj.$inputArea;
     this.settingTodo = userObj.fn_settingTodo;
+    this.fetchUsers = userObj.fn_fetchUsers;
 
     const that = this;
     
     this.$ul = document.createElement('ul');
 
-
     this.addEventListner = () => {
+        // 사용자 클릭
         this.$ul.addEventListener('click', (e)=>{
             that.settingTodo(e.target.dataset.index);
         })
 
-        this.$btn.addEventListener('click', (e)=>{
-            that.$userList.style.display = 'block';
-            that.$target.style.display = 'none';
-            that.$userTodo.style.display = 'none';
+        // user list 화면으로 돌아오기
+        this.$backBtn.addEventListener('click', (e)=>{
+            this.closeEtcArea();
+            that.fetchUsers();
         })
 
     }
 
     this.render = () => {
         this.$ul.innerHTML = this.userList.map((u, idx)=>`<li data-index=${idx}>${u}</li>`).join(' ');
-        this.$userList.prepend(this.$ul);
+        this.$usersArea.prepend(this.$ul);
+        this.closeEtcArea();
+    }
+
+    this.closeEtcArea = () => {
+        this.$usersArea.style.display = 'block';
+        this.$backBtn.style.display = 'none';
+        this.$todoArea.style.display = 'none';
+        this.$countArea.style.display = 'none';
+        this.$inputArea.style.display = 'none';
+    }
+
+    this.setState = (userList) => {
+        this.userList = userList;
+        this.render();
     }
     
     this.render();

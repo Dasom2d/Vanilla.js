@@ -1,48 +1,52 @@
-export default function TodoInput($target, addTodo, deleteAllTodo){
-    this.$target = $target;
+export default function TodoInput(inputObj){
+    this.$inputArea = inputObj.$inputArea;
+    this.addTodo = inputObj.fn_addTodo;
+    this.deleteTodo = inputObj.fn_deleteTodo;
+    this.deleteAllTodo = inputObj.fn_deleteAllTodo;
+
     this.$div = document.createElement('div');
     this.$input = document.createElement('input');
     this.$inputBtn = document.createElement( 'button' );
-    this.$deleteBtn = document.createElement( 'button' );
+    this.$deleteAllBtn = document.createElement( 'button' );
+
+    const that = this;
 
     this.render = () => {
-        this.$target.appendChild(this.$div);
+        this.$inputArea.appendChild(this.$div);
 
         this.$input.setAttribute('type', 'text');
         this.$div.appendChild(this.$input);
 
-        const inputBtnText = document.createTextNode( 'Click' );
+        const inputBtnText = document.createTextNode( 'todo 등록' );
         this.$inputBtn.appendChild(inputBtnText);
         this.$div.appendChild(this.$inputBtn);
 
-        const deleteBtnText = document.createTextNode('remove All');
-        this.$deleteBtn.appendChild(deleteBtnText);
-        this.$div.appendChild(this.$deleteBtn);
+        const deleteBtnText = document.createTextNode('전체 삭제');
+        this.$deleteAllBtn.appendChild(deleteBtnText);
+        this.$div.appendChild(this.$deleteAllBtn);
 
     }
 
 
     this.todoInputAddEventListener = () => {
-        this.$inputBtn.addEventListener('click', this.addTodo); 
+        this.$inputBtn.addEventListener('click', (e)=>{
+            that.getTodo();
+        }); 
         
-        this.$deleteBtn.addEventListener('click', (e) => {
-            this.deleteAllTodo();
+        this.$deleteAllBtn.addEventListener('click', (e) => {
+            that.deleteAllTodo();
         })
     }
 
-    this.resetInputValue = () => {
+    this.resetTodo= () => {
         this.$input.value = '';
     }
 
-    this.addTodo = () => {
-        addTodo(this.$input.value);
-        this.resetInputValue();
+    this.getTodo = () => {
+        this.addTodo(this.$input.value);
+        this.resetTodo();
     }
 
-    this.deleteAllTodo = () => {
-        deleteAllTodo();
-    }
-   
 
     this.render();
     this.todoInputAddEventListener();

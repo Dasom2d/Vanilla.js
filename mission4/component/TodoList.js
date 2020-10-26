@@ -1,16 +1,33 @@
 
-export default function TodoList(data, $target, isValid, toggleTodo, deleteTodo){
-    this.$target = $target;
-    this.data = data;
+export default function TodoList(todoObj){
+    this.userName = '';
+    this.todos = [];
+    this.$usersArea = todoObj.$usersArea;
+    this.$todoArea = todoObj.$todoArea;
+    this.$inputArea = todoObj.$inputArea;
+    this.$backBtn = todoObj.$backBtn;
+    this.isValid = todoObj.fn_isValid;
+    this.toggleTodo = todoObj.fn_toggleTodo;
+    this.deleteTodo = todoObj.fn_deleteTodo;
    
     this.$ul = document.createElement('ul');
+
+    const that = this;
 
     if(!new.target){
         throw new Error('new 키워드로 작성해주세요.');
     }
  //   isValid();
     this.render = () => {
-        this.$ul.innerHTML = this.data.map((todo, index) => {
+        this.$usersArea.style.display = 'none';
+        let $prevUl = this.$usersArea.querySelector('ul');
+        while ($prevUl != null && $prevUl.hasChildNodes()) {
+            $prevUl.removeChild($prevUl.firstChild);
+        }
+
+        this.$backBtn.style.display = 'block';
+        this.$todoArea.innerHTML = this.userName + '의 Todo List';
+        this.$ul.innerHTML = this.todos.map((todo, index) => {
             return todo.isCompleted ? `
               <li data-index=${index}>
                 (완료) <s class="font-red">${todo.content}</s>
@@ -22,37 +39,28 @@ export default function TodoList(data, $target, isValid, toggleTodo, deleteTodo)
               </li>
             `
           }).join('');
-        this.$target.prepend(this.$ul);
+        this.$todoArea.firstChild.after(this.$ul);
+        this.$todoArea.style.display = 'block';
+        this.$inputArea.style.display = 'block';
     }
 
-    this.setState = (nextData) => {
-        this.data = nextData;
+    this.setState = (newTodos, newUser) => {
+        this.todos = newTodos;
+        this.userName = newUser;
         this.render();
     }
 
     this.todoListAddEventListner = () => {
         this.$ul.addEventListener('click', (e)=>{
             if(e.target.tagName === 'LI' || e.target.tagName === 'S'){
-                toggleTodo(e.target.closest("li").dataset.index);
+                that.toggleTodo(e.target.closest("li").dataset.index);
             } else if(e.target.tagName === 'BUTTON'){
-                deleteTodo(e.target.closest("li").dataset.index);
+                that.deleteTodo(e.target.closest("li").dataset.index);
             }
         })
 
     }
 
-    this.render();
+ //   this.render();
     this.todoListAddEventListner();
-}
-
-function isValid(that){
-    if(that.data === null || that.data === undefined) {
-        throw new Error('data가 null 혹은 undefinded입니다.');
-    }
-    if(!Array.isArray(that.data)) {
-        throw new Error('data가 Array가 아닙니다.');
-    }
-    if(!that.data.every(d=>typeof d.text === 'string' || typeof d.isCompleted === 'boolean')) {
-        throw new Error('data의 타입이 적절하지않습니다.');
-    }
 }
