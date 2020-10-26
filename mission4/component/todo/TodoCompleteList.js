@@ -1,5 +1,4 @@
-
-export default function TodoList(todoObj){
+export default function TodoCompleteList(todoObj){
     this.userName = '';
     this.todos = [];
     this.$usersArea = todoObj.$usersArea;
@@ -17,7 +16,6 @@ export default function TodoList(todoObj){
     if(!new.target){
         throw new Error('new 키워드로 작성해주세요.');
     }
- //   isValid();
     this.render = () => {
         this.$usersArea.style.display = 'none';
         let $prevUl = this.$usersArea.querySelector('ul');
@@ -61,6 +59,5 @@ export default function TodoList(todoObj){
 
     }
 
- //   this.render();
     this.todoListAddEventListner();
 }

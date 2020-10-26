@@ -1,10 +1,9 @@
-import TodoList from './TodoList.js'
-import TodoCompleteList from './TodoCompleteList.js'
-import TodoIncompleteList from './TodoIncompleteList.js'
-import TodoInput from './TodoInput.js'
-import TodoCount from './TodoCount.js'
-import * as api from './api.js'
-import UserList from './UserList.js'
+import TodoList from './todo/TodoList.js'
+import Todo from './todo/Todo.js'
+import TodoInput from './input/TodoInput.js'
+import TodoCount from './count/TodoCount.js'
+import * as api from '../api/api.js'
+import UserList from './user/UserList.js'
 
 
 export default function App(){
@@ -83,7 +82,6 @@ export default function App(){
 
   this.render = () => {
     this.todoList.setState(this.state.todos, this.state.selectedUser);
-   // this.todoCompleteList.setState(this.state.todos);
     this.todoCount.render();
   }
 
@@ -115,13 +113,6 @@ export default function App(){
     fn_deleteTodo: this.deleteTodo
   });
 
-  // this.todoCompleteList = new TodoCompleteList({
-  //   competeTodos: this.state.todos, 
-  //   $completeTodoList: this.state.$completeTodoList, 
-  //   fn_isValid: this.isValid, 
-  //   fn_toggldTodo: this.toggleTodo, 
-  //   fn_deleteTodo: this.deleteTodo
-  // });
 
   this.todoInput = new TodoInput({
     $inputArea: this.state.$inputArea, 
