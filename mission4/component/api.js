@@ -1,8 +1,11 @@
-const TODO_API = 'https://todo-api.roto.codes';
-const USER_API = 'https://todo-api.roto.codes/users ';
+const TODO_API = `https://todo-api.roto.codes`;
+const USER_API = `https://todo-api.roto.codes/users`;
+
+const $loading = document.querySelector('#loading');
 
 const request = async (fetchUrl, options) => {
     try{
+        $loading.style.display = 'block';
         const res = await fetch(fetchUrl, {
             headers: {
                 'Content-Type': 'application/json'
@@ -11,6 +14,7 @@ const request = async (fetchUrl, options) => {
         });
     
         if(res.ok){
+            $loading.style.display = 'none';
             return await res.json();
         } else {
         new Promise((resolve, reject) => {
@@ -25,7 +29,7 @@ const request = async (fetchUrl, options) => {
 }
 
 const saveTodos = async (url, user, newData) => {
-    await request(url+'/'+user, {
+    await request(`${url}/${user}`, {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -37,7 +41,8 @@ const saveTodos = async (url, user, newData) => {
 }
 
 const getTodos = async (url, user) => {
-    return await request(url+'/'+user);
+  //  return await request(`${url}/${user}?delay=5000`);
+    return await request(`${url}/${user}`);
 }
 
 const deleteTodos = async (url, user, id) => {

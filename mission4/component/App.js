@@ -34,11 +34,20 @@ export default function App(){
 
   this.settingTodos = (userIdx) => {
     this.state.selectedUser = this.state.users[userIdx];
-    this.fetchTodos();
+    this.state.todos = [];
+    this.render();
 
+    this.fetchTodos();
     this.state.$userTodo.style.display = 'block';
     this.state.$userTodo.innerHTML = this.state.selectedUser + '의 Todo List';
     this.state.$showBtn.style.display = 'block';
+    
+   
+    let $ul = this.state.$target.querySelector('ul')
+    while ($ul.hasChildNodes()) {
+      $ul.removeChild($ul.firstChild);
+   }
+
     this.state.$userList.style.display = 'none';
     this.state.$target.style.display = 'block';
   }
