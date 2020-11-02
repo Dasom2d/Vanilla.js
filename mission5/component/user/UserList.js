@@ -29,7 +29,7 @@ export default function UserList(userObj) {
 
     this.render = () => {
         this.$ul.innerHTML = this.userList.map((u, idx)=>`<li data-index=${idx}>${u}</li>`).join(' ');
-        this.$usersArea.prepend(this.$ul);
+        this.$usersArea.appendChild(this.$ul);
         this.closeEtcArea();
     }
 

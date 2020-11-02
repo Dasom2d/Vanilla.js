@@ -9,7 +9,7 @@ export default function TodoCount(countObj){
         const todoCount = this.countTodo();
         this.$div.innerText = `완료된 일 ; ${todoCount.completeTodo}
                                 미완료된 일 ; ${todoCount.incompleteTodo}`;
-        this.$countArea.append(this.$div);
+        this.$countArea.appendChild(this.$div);
 
     }
 }
